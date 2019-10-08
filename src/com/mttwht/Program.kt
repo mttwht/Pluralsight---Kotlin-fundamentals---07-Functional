@@ -2,17 +2,25 @@ package com.mttwht
 
 fun main(args: Array<String>) {
     var program = Program()
-    program.fibonacci(8)
+    program.fibonacci(8, object: Process {
+        override fun execute(value: Int) {
+            println(value)
+        }
+    })
+}
+
+interface Process {
+    fun execute(value: Int)
 }
 
 class Program {
-    fun fibonacci(limit: Int) {
+    fun fibonacci(limit: Int, action: Process) {
         var prev = 0
         var prevprev = 0
         var current = 1
 
         for(i: Int in 1..limit) {
-            println(current)
+            action.execute(current)
 
             var temp = current
             prevprev = prev
